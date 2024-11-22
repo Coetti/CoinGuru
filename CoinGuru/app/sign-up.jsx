@@ -1,63 +1,44 @@
 import React, { useState } from "react";
-import { useAuth } from "./auth-context";
-import { useRouter } from "expo-router";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   Alert,
-  Image,
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 
-export default function Login() {
-  const { login } = useAuth();
-  const router = useRouter();
-
+export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
     if (username && password) {
       try {
-        const savedUsername = await AsyncStorage.getItem("username");
-        const savedPassword = await AsyncStorage.getItem("password");
+        // Salva os dados
+        await AsyncStorage.setItem("username", username);
+        await AsyncStorage.setItem("password", password);
 
-        if (savedUsername === username && savedPassword === password) {
-          login();
-          router.push("/(tabs)/rates");
-        } else {
-          Alert.alert("Erro", "Nome de usuário ou senha inválidos.");
-        }
+        Alert.alert("Sucesso!", "Conta criada com sucesso!");
+
+        router.push("/login");
       } catch (error) {
-        Alert.alert("Erro", "Ocorreu um erro ao verificar as credenciais.");
+        Alert.alert("Erro", "Ocorreu um erro ao salvar suas informações.");
       }
     } else {
       Alert.alert("Erro", "Por favor, preencha ambos os campos!");
     }
   };
 
-  const handleSignUp = () => {
-    router.push("/sign-up");
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.topbar}>
-        <Image
-          source={{ uri: "https://imgur.com/GIZ7DZ1.png" }}
-          style={styles.logo}
-        />
+        <Text style={styles.title}>Sign Up</Text>
       </View>
-      <View style={styles.header}>
-        <AntDesign name="user" size={24} color="#fff" />
-        <Text style={styles.title}>Profile</Text>
-      </View>
-      <View style={styles.loginContainer}>
+      <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -73,15 +54,16 @@ export default function Login() {
           onChangeText={setPassword}
           placeholderTextColor={"#777"}
         />
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-          <MaterialIcons name="login" size={24} color="#fff" />
-          <Text style={styles.buttonText}>Log In</Text>
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-        <Text style={styles.signUpButtonText}>
-          Don't have an account? Sign Up
+      <TouchableOpacity
+        style={styles.loginLink}
+        onPress={() => router.push("/login")}
+      >
+        <Text style={styles.loginLinkText}>
+          Already have an account? Log In
         </Text>
       </TouchableOpacity>
     </View>
@@ -105,34 +87,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 30,
   },
-  logo: {
-    height: 60,
-    width: 360,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 30,
-    marginBottom: 0,
-    gap: 10,
-    backgroundColor: "#202125",
-    width: "60%",
-    alignSelf: "center",
-    borderRadius: 5,
-    padding: 5,
-    borderColor: "#01B175",
-    borderWidth: 2,
-  },
-  loginContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#fff",
+  },
+  formContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   input: {
     width: "100%",
@@ -146,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#fff",
   },
-  loginButton: {
+  signUpButton: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#01B175",
@@ -155,7 +118,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "35%",
     height: 50,
-    gap: 10,
     marginTop: 20,
   },
   buttonText: {
@@ -163,12 +125,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
   },
-  signUpButton: {
-    flexDirection: "row",
-    backfaceVisibility: "hidden",
+  loginLink: {
+    marginTop: 20,
     alignSelf: "center",
   },
-  signUpButtonText: {
+  loginLinkText: {
     color: "#fff",
     fontWeight: "bold",
     textDecorationLine: "underline",

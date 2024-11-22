@@ -184,6 +184,7 @@ export default function Calculator() {
           placeholder="Enter amount"
           value={amount}
           onChangeText={setAmount}
+          placeholderTextColor={"#777"}
         />
         <TouchableOpacity style={styles.convertButton} onPress={handleConvert}>
           <FontAwesome6 name="circle-dollar-to-slot" size={20} color="#fff" />
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
 
   picker: {
-    backgroundColor: "#202125",
+    backgroundColor: "#424347",
     color: "#fff",
     marginBottom: 10,
   },
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: "#424347",
     padding: 10,
     borderRadius: 5,
     width: "40%",
@@ -273,7 +274,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderColor: "#01B175",
     borderWidth: 2,
-    color: "#15161A",
+    color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
   },
@@ -316,7 +317,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   resultBox: {
-    backgroundColor: "#fff",
+    backgroundColor: "#424347",
+
     padding: 15,
     borderRadius: 10,
     width: "80%",
@@ -325,8 +327,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   resultText: {
-    color: "#15161A",
     fontSize: 18,
     fontWeight: "bold",
+    color: "#fff",
   },
 });

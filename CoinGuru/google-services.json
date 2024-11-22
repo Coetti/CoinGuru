@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "491639574278",
+    "project_id": "coinguru-36614",
+    "storage_bucket": "coinguru-36614.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491639574278:android:c50650097787f227275887",
+        "android_client_info": {
+          "package_name": "com.coetti.coinguru"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYFa4YPJfZfjce3pQn6Q_rVRMJpZrXNOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

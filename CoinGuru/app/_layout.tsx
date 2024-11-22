@@ -1,5 +1,5 @@
 import { Stack, useRouter } from "expo-router";
-import { AuthProvider, useAuth } from "./auth-context";
+import AuthProvider, { useAuth } from "./auth-context"; // Importação correta
 import { useEffect } from "react";
 
 export default function RootLayout() {
@@ -25,6 +25,7 @@ function AuthProtectedStack() {
     <Stack>
       <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="sign-up" options={{ headerShown: false }} />
     </Stack>
   );
 }
