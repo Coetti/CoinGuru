@@ -12,7 +12,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="rates"
         options={{
           title: "Rates",
           tabBarIcon: ({ color, focused }) => (
@@ -36,6 +36,24 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <AntDesign
               name="calculator"
+              size={24}
+              color={color}
+              style={{
+                transform: [{ scale: focused ? 1.3 : 1 }],
+                elevation: focused ? 8 : 0,
+              }}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, focused }) => (
+            <AntDesign
+              name="user"
               size={24}
               color={color}
               style={{

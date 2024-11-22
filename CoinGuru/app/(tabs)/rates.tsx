@@ -1,10 +1,10 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, ToastAndroid } from "react-native";
 import { useEffect, useState } from "react";
-import CurrencyList from "../components/CurrencyList";
+import CurrencyList from "../../components/CurrencyList";
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 
-export default function Index() {
+export default function Rates() {
   const [fetchDate, setFetchDate] = useState("");
   const [currenciesData, setCurrenciesData] = useState([
     {
@@ -54,7 +54,12 @@ export default function Index() {
   async function getExchangeRate() {
     try {
       const response = await axios.get(
-        "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json"
+        "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json",
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        }
       );
       if (response && response.data) {
         updateCurrencyRates(response.data.usd);
@@ -67,16 +72,18 @@ export default function Index() {
   }
 
   const updateCurrencyRates = (data) => {
-    const updatedCurrencies = [...currenciesData];
-    for (let currency of updatedCurrencies) {
-      if (currency.symbol !== "USD") {
-        const currencyName = String(currency.symbol).toLowerCase();
+    const updatedCurrencies = currenciesData.map((currency) => {
+      if (currency.symbol === "USD") return currency;
 
-        const rate = data[currencyName];
+      const currencyName = String(currency.symbol).toLowerCase();
+      const rate = data[currencyName];
 
-        currency.rate = 1 / rate;
-      }
-    }
+      return {
+        ...currency,
+        rate: 1 / rate,
+      };
+    });
+
     setCurrenciesData(updatedCurrencies);
   };
 
@@ -89,6 +96,11 @@ export default function Index() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleRefresh = () => {
+    getExchangeRate();
+    ToastAndroid.show("Refreshed!", ToastAndroid.SHORT);
+  };
+
   return (
     <>
       <StatusBar style="dark" />
@@ -99,7 +111,11 @@ export default function Index() {
             style={styles.logo}
           />
         </View>
-        <CurrencyList currencies={currenciesData} date={fetchDate} />
+        <CurrencyList
+          currencies={currenciesData}
+          date={fetchDate}
+          handleRefresh={handleRefresh}
+        />
       </View>
     </>
   );

@@ -11,8 +11,9 @@ import {
   ToastAndroid,
 } from "react-native";
 import { useState } from "react";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const CurrencyList = ({ currencies, date }) => {
+const CurrencyList = ({ currencies, date, handleRefresh }) => {
   const [coinCount, setCoinCount] = useState(0);
   const showToast = () => {
     setCoinCount((prev) => prev + 1);
@@ -28,6 +29,13 @@ const CurrencyList = ({ currencies, date }) => {
       <View style={styles.date}>
         <FontAwesome6 name="calendar-days" size={24} color="#fff" />
         <Text style={styles.title}>{`- ${formattedDate}`}</Text>
+        <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
+          <MaterialCommunityIcons
+            name="refresh-circle"
+            size={30}
+            color="#01B175"
+          />
+        </TouchableOpacity>
       </View>
 
       <FlatList
@@ -78,6 +86,9 @@ const styles = StyleSheet.create({
     borderColor: "#01B175",
     borderWidth: 2,
     width: "70%",
+  },
+  refreshButton: {
+    backfaceVisibility: "hidden",
   },
   title: {
     fontSize: 24,

@@ -66,7 +66,12 @@ export default function Calculator() {
   async function getExchangeRate() {
     try {
       const response = await axios.get(
-        "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json"
+        "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.min.json",
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        }
       );
       if (response && response.data) {
         updateCurrencyRates(response.data.usd);
@@ -87,7 +92,6 @@ export default function Calculator() {
         const rate = data[currencyName];
 
         currency.rate = 1 / rate;
-        console.log(currencyName, currency.rate);
       }
     }
 
