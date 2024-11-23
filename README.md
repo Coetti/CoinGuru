@@ -1,2 +1,4 @@
 # CoinGuru
- Basic information about exchange rates for currencies 
+
+API pública utilizada no projeto para obter as cotações das moedas: https://github.com/fawazahmed0/exchange-api
+
