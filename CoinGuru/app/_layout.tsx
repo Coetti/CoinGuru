@@ -1,5 +1,5 @@
 import { Stack, useRouter } from "expo-router";
-import AuthProvider, { useAuth } from "./auth-context"; // Importação correta
+import AuthProvider, { useAuth } from "./auth-context";
 import { useEffect } from "react";
 
 export default function RootLayout() {
@@ -15,7 +15,6 @@ function AuthProtectedStack() {
   const router = useRouter();
 
   useEffect(() => {
-    // Se não estiver autenticado, redireciona para a página de login
     if (!isAuthenticated) {
       router.replace("/login");
     }

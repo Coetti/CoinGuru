@@ -23,7 +23,7 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export default AuthProvider; // Exportação padrão
+export default AuthProvider;
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
